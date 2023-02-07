@@ -19,12 +19,7 @@
 #define _ADAFRUIT_LSM6DSR_H
 
 #include "Adafruit_LSM6DS.h"
-
-#include <ostream>
-#include <sstream>
-#include <iomanip>
-#include <utility>
-
+#include <stdio.h>
 #define LSM6DSR_CHIP_ID 0x6B ///< LSM6DSL default device id from WHOAMI
 
 #define LSM6DSR_MASTER_CONFIG 0x1A ///< I2C Master config
@@ -42,20 +37,13 @@ public:
   void enableI2CMasterPullups(bool enable_pullups);
   void enablePedometer(bool enable);
 
-  std::string const &readAll()
+  void readAll(uint8_t *buffer, uint16_t bufferSize)
   {
     _read();
 
-    std::ostringstream outputString;
-    outputString << std::fixed;
-    outputString << std::setprecision(4); // maybe set this precision to according resolution of sensor
-
-    outputString << "[" << millis() << ";";
-    outputString << accX << "," << accY << "," << accZ << ",";
-    outputString << std::setprecision(3); // gyro values have less precision, because of different conversion
-    outputString << gyroX << "," << gyroY << "," << gyroZ << "]";
-
-    return std::move(outputString.str());
+    snprintf((char *)buffer, 30, "[101;%6.4f,%6.4f,%6.4f]", accX, accY, accZ);
+    // buffer[0] = accX;
+    // buffer[1] = 3;
   }
 
 private:
