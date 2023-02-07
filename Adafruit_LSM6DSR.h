@@ -23,6 +23,7 @@
 #include <ostream>
 #include <sstream>
 #include <iomanip>
+#include <utility>
 
 #define LSM6DSR_CHIP_ID 0x6B ///< LSM6DSL default device id from WHOAMI
 
@@ -41,7 +42,7 @@ public:
   void enableI2CMasterPullups(bool enable_pullups);
   void enablePedometer(bool enable);
 
-  void readAll()
+  std::string const &readAll()
   {
     _read();
 
@@ -52,9 +53,9 @@ public:
     outputString << "[" << millis() << ";";
     outputString << accX << "," << accY << "," << accZ << ",";
     outputString << std::setprecision(3); // gyro values have less precision, because of different conversion
-    outputString << gyroX << "," << gyroY << "," << gyroZ << "]"; 
+    outputString << gyroX << "," << gyroY << "," << gyroZ << "]";
 
-    Serial.println(outputString.str().c_str());
+    return std::move(outputString.str());
   }
 
 private:
