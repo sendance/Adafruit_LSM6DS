@@ -37,6 +37,12 @@ public:
   void enableI2CMasterPullups(bool enable_pullups);
   void enablePedometer(bool enable);
 
+  // reads temp, acc, and gyro and saves it into member variables
+  void read()
+  {
+    _read();
+  }
+
   void readAll(uint8_t *buffer, uint16_t bufferSize)
   {
     _read();
