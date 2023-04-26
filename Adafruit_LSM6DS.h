@@ -38,14 +38,15 @@
 #define LSM6DS_OUTX_L_A 0x28       ///< First accel data register
 #define LSM6DS_STEPCOUNTER 0x4B    ///< 16-bit step counter
 #define LSM6DS_TAP_CFG 0x58        ///< Tap/pedometer configuration
-#define LSM6DS_WAKEUP_THS                                                      \
+#define LSM6DS_WAKEUP_THS \
   0x5B ///< Single and double-tap function threshold register
-#define LSM6DS_WAKEUP_DUR                                                      \
-  0x5C ///< Free-fall, wakeup, timestamp and sleep mode duration
+#define LSM6DS_WAKEUP_DUR \
+  0x5C                      ///< Free-fall, wakeup, timestamp and sleep mode duration
 #define LSM6DS_MD1_CFG 0x5E ///< Functions routing on INT1 register
 
 /** The accelerometer data rate */
-typedef enum data_rate {
+typedef enum data_rate
+{
   LSM6DS_RATE_SHUTDOWN,
   LSM6DS_RATE_12_5_HZ,
   LSM6DS_RATE_26_HZ,
@@ -60,7 +61,8 @@ typedef enum data_rate {
 } lsm6ds_data_rate_t;
 
 /** The accelerometer data range */
-typedef enum accel_range {
+typedef enum accel_range
+{
   LSM6DS_ACCEL_RANGE_2_G,
   LSM6DS_ACCEL_RANGE_16_G,
   LSM6DS_ACCEL_RANGE_4_G,
@@ -68,7 +70,8 @@ typedef enum accel_range {
 } lsm6ds_accel_range_t;
 
 /** The gyro data range */
-typedef enum gyro_range {
+typedef enum gyro_range
+{
   LSM6DS_GYRO_RANGE_125_DPS = 0b0010,
   LSM6DS_GYRO_RANGE_250_DPS = 0b0000,
   LSM6DS_GYRO_RANGE_500_DPS = 0b0100,
@@ -78,7 +81,8 @@ typedef enum gyro_range {
 } lsm6ds_gyro_range_t;
 
 /** The high pass filter bandwidth */
-typedef enum hpf_range {
+typedef enum hpf_range
+{
   LSM6DS_HPF_ODR_DIV_50 = 0,
   LSM6DS_HPF_ODR_DIV_100 = 1,
   LSM6DS_HPF_ODR_DIV_9 = 2,
@@ -88,7 +92,8 @@ typedef enum hpf_range {
 class Adafruit_LSM6DS;
 
 /** Adafruit Unified Sensor interface for temperature component of LSM6DS */
-class Adafruit_LSM6DS_Temp : public Adafruit_Sensor {
+class Adafruit_LSM6DS_Temp : public Adafruit_Sensor
+{
 public:
   /** @brief Create an Adafruit_Sensor compatible object for the temp sensor
       @param parent A pointer to the LSM6DS class */
@@ -102,12 +107,14 @@ private:
 };
 
 /** Adafruit Unified Sensor interface for accelerometer component of LSM6DS */
-class Adafruit_LSM6DS_Accelerometer : public Adafruit_Sensor {
+class Adafruit_LSM6DS_Accelerometer : public Adafruit_Sensor
+{
 public:
   /** @brief Create an Adafruit_Sensor compatible object for the accelerometer
      sensor
       @param parent A pointer to the LSM6DS class */
-  Adafruit_LSM6DS_Accelerometer(Adafruit_LSM6DS *parent) {
+  Adafruit_LSM6DS_Accelerometer(Adafruit_LSM6DS *parent)
+  {
     _theLSM6DS = parent;
   }
   bool getEvent(sensors_event_t *);
@@ -119,7 +126,8 @@ private:
 };
 
 /** Adafruit Unified Sensor interface for gyro component of LSM6DS */
-class Adafruit_LSM6DS_Gyro : public Adafruit_Sensor {
+class Adafruit_LSM6DS_Gyro : public Adafruit_Sensor
+{
 public:
   /** @brief Create an Adafruit_Sensor compatible object for the gyro sensor
       @param parent A pointer to the LSM6DS class */
@@ -136,7 +144,8 @@ private:
  *    @brief  Class that stores state and functions for interacting with
  *            the LSM6DS I2C Accel/Gyro
  */
-class Adafruit_LSM6DS {
+class Adafruit_LSM6DS
+{
 public:
   Adafruit_LSM6DS();
   virtual ~Adafruit_LSM6DS();
@@ -176,6 +185,7 @@ public:
   bool awake(void);
   bool shake(void);
 
+  
   void enablePedometer(bool enable);
   void resetPedometer(void);
   uint16_t readPedometer(void);
@@ -223,7 +233,7 @@ protected:
   Adafruit_SPIDevice *spi_dev = NULL; ///< Pointer to SPI bus interface
 
   float temperature_sensitivity =
-      256.0; ///< Temp sensor sensitivity in LSB/degC
+      256.0;                                ///< Temp sensor sensitivity in LSB/degC
   Adafruit_LSM6DS_Temp *temp_sensor = NULL; ///< Temp sensor data object
   Adafruit_LSM6DS_Accelerometer *accel_sensor =
       NULL;                                 ///< Accelerometer data object
@@ -235,13 +245,13 @@ protected:
   lsm6ds_gyro_range_t gyroRangeBuffered = LSM6DS_GYRO_RANGE_250_DPS;
 
 private:
-  friend class Adafruit_LSM6DS_Temp; ///< Gives access to private members to
-                                     ///< Temp data object
+  friend class Adafruit_LSM6DS_Temp;          ///< Gives access to private members to
+                                              ///< Temp data object
   friend class Adafruit_LSM6DS_Accelerometer; ///< Gives access to private
                                               ///< members to Accelerometer data
                                               ///< object
-  friend class Adafruit_LSM6DS_Gyro; ///< Gives access to private members to
-                                     ///< Gyro data object
+  friend class Adafruit_LSM6DS_Gyro;          ///< Gives access to private members to
+                                              ///< Gyro data object
 
   void fillTempEvent(sensors_event_t *temp, uint32_t timestamp);
   void fillAccelEvent(sensors_event_t *accel, uint32_t timestamp);
