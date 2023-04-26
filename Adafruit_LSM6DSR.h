@@ -91,6 +91,49 @@ public:
     }
   }
 
+  /*bool enableWakeUpDetection(){
+    // turn on acc with correct settings, ODR_XL = 26 Hz, FS_XL = ±2 g
+    Adafruit_BusIO_Register CTRL1XLRegister = Adafruit_BusIO_Register(i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, LSM6DS_CTRL1_XL);
+    bool success = CTRL1XLRegister.write(0x20);
+    if (!success)
+    {
+      return false;
+    }
+
+    // turn on acc low power
+    Adafruit_BusIO_Register CTRL6CRegister = Adafruit_BusIO_Register(i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, LSM6DS_CTRL6_C);
+    Adafruit_BusIO_RegisterBits XLHMModeBit = Adafruit_BusIO_RegisterBits(&CTRL6CRegister, 1, 4);
+    success = XLHMModeBit.write(1); // 1: high-performance operating mode disabled
+    if (!success)
+    {
+      return false;
+    }
+
+
+
+  }*/
+
+  bool enableAccLowPower()
+  {
+    // turn on acc with correct settings, ODR_XL = 26 Hz, FS_XL = ±2 g
+    Adafruit_BusIO_Register CTRL1XLRegister = Adafruit_BusIO_Register(i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, LSM6DS_CTRL1_XL);
+    bool success = CTRL1XLRegister.write(0x20);
+    if (!success)
+    {
+      return false;
+    }
+
+    // turn on acc low power
+    Adafruit_BusIO_Register CTRL6CRegister = Adafruit_BusIO_Register(i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, LSM6DS_CTRL6_C);
+    Adafruit_BusIO_RegisterBits XLHMModeBit = Adafruit_BusIO_RegisterBits(&CTRL6CRegister, 1, 4);
+    success = XLHMModeBit.write(1); // 1: high-performance operating mode disabled
+    if (!success)
+    {
+      return false;
+    }
+    return true;
+  }
+
   bool enableTiltDetection()
   {
     bool success = false;
