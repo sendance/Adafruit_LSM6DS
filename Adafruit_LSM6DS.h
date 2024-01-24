@@ -189,6 +189,10 @@ public:
   float gyroscopeSampleRate(void);
   int gyroscopeAvailable(void);
 
+  // reads acc and gyr but in different resolution
+  // (acc to mg, gyro to mdeg)
+  virtual void readAccGyrMilliResolution();
+
   int16_t rawAccX, ///< Last reading's raw accelerometer X axis
       rawAccY,     ///< Last reading's raw accelerometer Y axis
       rawAccZ,     ///< Last reading's raw accelerometer Z axis
@@ -213,6 +217,7 @@ protected:
   uint8_t chipID(void);
   uint8_t status(void);
   virtual void _read(void);
+  
   virtual bool _init(int32_t sensor_id);
 
   uint16_t _sensorid_accel, ///< ID number for accelerometer
