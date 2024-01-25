@@ -193,6 +193,10 @@ public:
   // (acc to mg, gyro to mdeg)
   virtual void readAccGyrMilliResolution();
 
+  // reads acc and gyr but in different resolution
+  // (acc to g, gyro to dps)
+  virtual void readAccGGyroDps();
+
   int16_t rawAccX, ///< Last reading's raw accelerometer X axis
       rawAccY,     ///< Last reading's raw accelerometer Y axis
       rawAccZ,     ///< Last reading's raw accelerometer Z axis
